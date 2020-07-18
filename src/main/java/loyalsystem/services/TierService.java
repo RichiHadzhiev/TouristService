@@ -16,17 +16,16 @@ import loyalsystem.model.Tier;
 public class TierService {
 
 	@PersistenceContext
-	private EntityManager em;
+	private EntityManager entityManager;
 	
 	public Tier getTierById(Long id) {
 		
-		return em.createNamedQuery(Tier.GET_TIER_BY_ID, Tier.class).setParameter("id", id).getSingleResult();
+		return entityManager.createNamedQuery(Tier.GET_TIER_BY_ID, Tier.class).setParameter("id", id).getSingleResult();
 	}
 	
-	//check if getSingleResult() is good, if not use setMaxResults(1).getResultList()
 	public Tier getLastTier() {
 		
-		List<Tier> tierList = em.createNamedQuery(Tier.GET_ORDERED_TIERS, Tier.class).setMaxResults(1).getResultList();
+		List<Tier> tierList = entityManager.createNamedQuery(Tier.GET_ORDERED_TIERS, Tier.class).setMaxResults(1).getResultList();
 		return tierList.get(0);
 	}
 	
@@ -35,6 +34,6 @@ public class TierService {
 		Tier tier = new Tier();
 		tier.setTierName(tierName);
 		tier.setDiscount(discount);
-		em.persist(tier);
+		entityManager.persist(tier);
 	}
 }

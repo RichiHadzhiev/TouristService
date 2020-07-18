@@ -58,4 +58,9 @@ public class Pricing {
 		this.price = price;
 	}
 	
+	public String toString() {
+		
+		return String.format("From: %s, To: %s, Price: %.2f", fromCity, toCity, price);
+	}
+	
 }

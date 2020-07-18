@@ -18,23 +18,23 @@ import loyalsystem.model.Sale;
 public class SaleService {
 	
 	@PersistenceContext
-	private EntityManager em;
+	private EntityManager entityManager;
 	
 	@Autowired 
-	private CardService cs;
+	private CardService cardService;
 	
 	@Autowired
-	private TierService ts;
+	private TierService tierService;
 	
 	public List<Sale> getAllSalesByDate(String dateOfSale){
-		return em.createNamedQuery(Sale.GET_ALL_SALES_BY_DATE, Sale.class).setParameter("dateOfSale", dateOfSale).setMaxResults(1000).getResultList();
+		return entityManager.createNamedQuery(Sale.GET_ALL_SALES_BY_DATE, Sale.class).setParameter("dateOfSale", dateOfSale).setMaxResults(1000).getResultList();
 	}
 	
 	public void addSale(BigDecimal price, Long cardId) throws Exception {
 		Sale sale = new Sale();
 		sale.setPrice(price);
 		if(cardId != null) {
-			Card card = cs.getCardById(cardId); //find the card with the given id
+			Card card = cardService.getCardById(cardId); //find the card with the given id
 			sale.setDiscountedPrice(sale.getPrice().subtract(sale.getPrice()
 										.multiply(card.getDiscount().divide(new BigDecimal(100)))));
 			sale.setPoints(sale.getDiscountedPrice().multiply(Card.scale));
@@ -43,9 +43,9 @@ public class SaleService {
 			//if the card's turnover is greater than the tierId*1000
 			//must not hard code the last tier
 			if(card.getTurnOver().compareTo(new BigDecimal(card.getTier().getId()).multiply(new BigDecimal(1000))) == 1
-					&& card.getTier().getId() != ts.getLastTier().getId()) {
+					&& card.getTier().getId() != tierService.getLastTier().getId()) {
 				
-				cs.updateTier(card);
+				cardService.updateTier(card);
 			}
 			sale.setCard(card);
 		}
@@ -53,6 +53,6 @@ public class SaleService {
 			sale.setDiscountedPrice(price);
 			sale.setPoints(new BigDecimal(0));
 		}
-		em.persist(sale);
+		entityManager.persist(sale);
 	}
 }
