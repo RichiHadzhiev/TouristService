@@ -3,6 +3,7 @@ package loyalsystem.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import loyalsystem.model.dtos.CardDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import loyalsystem.model.Card;
-import loyalsystem.model.dtos.CardDTO;
 import loyalsystem.services.CardService;
 
 @RestController
@@ -25,12 +25,12 @@ public class CardController {
 	@RequestMapping("/cards")
 	public ResponseEntity<List<CardDTO>> getAllCards() {
 		
-		List<CardDTO> dtos = new ArrayList<CardDTO>();
+		List<CardDTO> cardDTOs = new ArrayList<CardDTO>();
 		List<Card> cards = cardService.getAllCards();
 		for(Card card : cards) {
-			dtos.add(CardDTO.convertToDTO(card));
+			cardDTOs.add(CardDTO.convertToDTO(card));
 		}
-		return new ResponseEntity<List<CardDTO>>(dtos, HttpStatus.OK);
+		return new ResponseEntity<List<CardDTO>>(cardDTOs, HttpStatus.OK);
 	}
 	
 	@RequestMapping("/cards/{id}")

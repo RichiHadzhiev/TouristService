@@ -36,7 +36,7 @@ public class PricingController {
 	@RequestMapping(method = RequestMethod.PUT, value = "/pricings/{fromCity}_{toCity}/{newPrice}")
 	public void updatePricing(@PathVariable String fromCity, 
 							  @PathVariable String toCity,
-							  @PathVariable BigDecimal newPrice) throws Exception {
+							  @PathVariable BigDecimal newPrice) {
 		pricingService.updatePricing(fromCity, toCity, newPrice);
 	}
 

@@ -23,7 +23,7 @@ public class CardService {
 	private TierService tierService;
 	
 	public List<Card> getAllCards(){
-		return entityManager.createNamedQuery("Card.getAllCards", Card.class).setMaxResults(1000).getResultList();
+		return entityManager.createNamedQuery(Card.GET_ALL_CARDS, Card.class).setMaxResults(1000).getResultList();
 	}
 	
 	public Card getCardById(Long id) throws Exception {
@@ -37,14 +37,14 @@ public class CardService {
 	public void addCard(String holderName) {
 		Card card = new Card();
 		card.setHolderName(holderName);
-		card.setTier(tierService.getTierById(new Long(1)));
+		card.setTier(tierService.getTierById(1L));
 		card.setDiscount(card.getTier().getDiscount());
 		entityManager.persist(card);
 	}
 	
 	public void updateTier(Card card) {
 		
-		Long tierIter = new Long(1);
+		Long tierIter = 1L;
 		while(tierIter < tierService.getLastTier().getId()) {
 			
 			BigDecimal turnOver = card.getTurnOver();
@@ -53,7 +53,7 @@ public class CardService {
 					turnOver.compareTo((thousand.multiply(new BigDecimal(tierIter)))
 							.add(thousand)) < 0) {
 				
-				card.setTier(tierService.getTierById(new Long(tierIter)+1));
+				card.setTier(tierService.getTierById(tierIter +1));
 			}	
 			tierIter++;
 		}

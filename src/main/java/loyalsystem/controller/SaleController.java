@@ -25,12 +25,12 @@ public class SaleController {
 	@RequestMapping("/sales")
 	public ResponseEntity<List<SaleDTO>> getAllSalesByDate(@RequestParam String dateOfSale){
 		
-		List<SaleDTO> dtos = new ArrayList<SaleDTO>();
+		List<SaleDTO> saleDTOs = new ArrayList<SaleDTO>();
 		List<Sale> sales = saleService.getAllSalesByDate(dateOfSale);
 		for(Sale sale : sales) {
-			dtos.add(SaleDTO.convertToDTO(sale));
+			saleDTOs.add(SaleDTO.convertToDTO(sale));
 		}
-		return new ResponseEntity<List<SaleDTO>>(dtos, HttpStatus.OK);
+		return new ResponseEntity<List<SaleDTO>>(saleDTOs, HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value =  "/sales")

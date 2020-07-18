@@ -42,8 +42,8 @@ public class SaleService {
 			card.setTurnOver(card.getTurnOver().add(sale.getDiscountedPrice()));
 			//if the card's turnover is greater than the tierId*1000
 			//must not hard code the last tier
-			if(card.getTurnOver().compareTo(new BigDecimal(card.getTier().getId()).multiply(new BigDecimal(1000))) == 1
-					&& card.getTier().getId() != tierService.getLastTier().getId()) {
+			if(card.getTurnOver().compareTo(new BigDecimal(card.getTier().getId()).multiply(new BigDecimal(1000))) > 0
+					&& !card.getTier().getId().equals(tierService.getLastTier().getId())) {
 				
 				cardService.updateTier(card);
 			}

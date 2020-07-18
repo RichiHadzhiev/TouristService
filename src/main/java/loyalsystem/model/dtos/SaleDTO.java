@@ -65,9 +65,6 @@ public class SaleDTO {
 		mapper.addMappings(new PropertyMap<Sale, SaleDTO>() {
 			@Override
 			protected void configure() {
-				//DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-				//map().setDateOfSale(source.getDateOfSale().format(formatter));
-				
 				map().setHolderName(source.getCard().getHolderName());
 			}
 		});

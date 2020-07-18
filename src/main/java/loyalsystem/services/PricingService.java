@@ -26,7 +26,7 @@ public class PricingService {
 		entityManager.persist(pricing);
 	}
 	
-	public void updatePricing(String fromCity, String toCity, BigDecimal price) throws Exception {
+	public void updatePricing(String fromCity, String toCity, BigDecimal price) {
 		Pricing pricing = entityManager.createNamedQuery(Pricing.UPDATE_PRICING, Pricing.class)
 		.setParameter("fromCity", fromCity).setParameter("toCity", toCity).getSingleResult();
 		pricing.setPrice(price);
